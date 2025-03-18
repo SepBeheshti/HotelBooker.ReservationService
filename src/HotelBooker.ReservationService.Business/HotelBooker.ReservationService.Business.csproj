@@ -7,11 +7,12 @@
     </PropertyGroup>
 
     <ItemGroup>
-      <Folder Include="ServiceBus\" />
+        <Folder Include="ServiceBus\"/>
     </ItemGroup>
 
     <ItemGroup>
-      <ProjectReference Include="..\..\HotelBooker.ReservationService.Api.csproj" />
+        <ProjectReference Include="..\HotelBooker.ReservationService.Business\HotelBooker.ReservationService.Business.csproj" />
+        <ProjectReference Include="..\HotelBooker.ReservationService.Data\HotelBooker.ReservationService.Data.csproj"/>
     </ItemGroup>
 
 </Project>
