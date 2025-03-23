@@ -1,12 +1,20 @@
 ﻿using HotelBooker.ReservationService.Business.Models;
+using HotelBooker.ReservationService.Data.Repositories;
 
 namespace HotelBooker.ReservationService.Business.Services;
 
-public class ReservationService(IReservationService reservationService) : IReservationService
+public class ReservationService : IReservationService
 {
+    public static IReservationRepository _reservationRepository;
+    
+    public ReservationService(IReservationRepository reservationRepository)
+    {
+        _reservationRepository = reservationRepository;
+    }
+    
     public Task<Reservation> GetReservationByIdAsync(Guid id)
     {
-        return reservationService.GetReservationByIdAsync(id);
+        return _reservationRepository.GetByIdAsync(id);
     }
 
     public Task<Reservation> GetReservationByNumberAsync(string reservationNumber)
@@ -21,7 +29,7 @@ public class ReservationService(IReservationService reservationService) : IReser
 
     public Task<Reservation> CreateReservationAsync(Reservation reservation)
     {
-        throw new NotImplementedException();
+        reservat
     }
 
     public Task<Reservation> UpdateReservationAsync(Reservation reservation)

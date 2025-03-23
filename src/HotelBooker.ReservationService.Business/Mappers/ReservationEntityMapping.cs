@@ -3,7 +3,7 @@ using HotelBooker.ReservationService.Data.Entities;
 
 namespace HotelBooker.ReservationService.Business.Mappers;
 
-public class ReservationMapping
+public class ReservationEntityMapping
 {
     public ReservationEntity MapToEntity(Reservation reservation)
     {
