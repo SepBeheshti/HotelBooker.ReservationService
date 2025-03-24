@@ -32,9 +32,12 @@ public class ReservationRepository(ReservationDbContext dbContext) : IReservatio
         throw new NotImplementedException();
     }
 
-    public Task<ReservationEntity> CreateAsync(ReservationEntity reservation)
+    public async Task<ReservationEntity> CreateAsync(ReservationEntity reservation)
     {
-        throw new NotImplementedException();
+        var entry = await dbContext.Reservations.AddAsync(reservation);
+        await dbContext.SaveChangesAsync();
+        
+        return entry.Entity;
     }
 
     public Task UpdateAsync(ReservationEntity reservation)

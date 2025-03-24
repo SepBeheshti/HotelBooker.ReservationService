@@ -1,4 +1,6 @@
-﻿using HotelBooker.ReservationService.Business.Models;
+﻿using HotelBooker.ReservationService.Business.Mappers;
+using HotelBooker.ReservationService.Business.Models;
+using HotelBooker.ReservationService.Data.Entities;
 using HotelBooker.ReservationService.Data.Repositories;
 
 namespace HotelBooker.ReservationService.Business.Services;
@@ -12,9 +14,12 @@ public class ReservationService : IReservationService
         _reservationRepository = reservationRepository;
     }
     
-    public Task<Reservation> GetReservationByIdAsync(Guid id)
+    public async Task<Reservation> GetReservationByIdAsync(Guid id)
     {
-        return _reservationRepository.GetByIdAsync(id);
+        var reservationResponse = await _reservationRepository.GetByIdAsync(id);
+        var mappedReservation = ToReservationMapper.MapToReservation(reservationResponse);
+        
+        return mappedReservation;
     }
 
     public Task<Reservation> GetReservationByNumberAsync(string reservationNumber)
@@ -27,9 +32,13 @@ public class ReservationService : IReservationService
         throw new NotImplementedException();
     }
 
-    public Task<Reservation> CreateReservationAsync(Reservation reservation)
+    public async Task<Reservation> CreateReservationAsync(Reservation reservation)
     {
-        reservat
+        var mappedToReservationEntity = ToReservationEntityMapper.MapToReservationEntity(reservation);
+        var createdReservation = await _reservationRepository.CreateAsync(mappedToReservationEntity);
+        var mappedToReservation = ToReservationMapper.MapToReservation(createdReservation);
+        
+        return mappedToReservation;
     }
 
     public Task<Reservation> UpdateReservationAsync(Reservation reservation)

@@ -3,15 +3,15 @@ using HotelBooker.ReservationService.Data.Entities;
 
 namespace HotelBooker.ReservationService.Business.Mappers;
 
-public class ReservationEntityMapping
+public class ToReservationMapper
 {
-    public ReservationEntity MapToEntity(Reservation reservation)
+    public static Reservation MapToReservation(ReservationEntity reservation)
     {
-        return new ReservationEntity()
+        return new Reservation()
         {
             Id = reservation.Id,
             ReservationNumber = reservation.ReservationNumber,
-            Guest = new GuestEntity()
+            Guest = new Guest()
             {
                 FirstName = reservation.Guest.FirstName,
                 LastName = reservation.Guest.LastName,
