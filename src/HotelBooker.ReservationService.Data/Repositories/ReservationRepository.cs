@@ -12,14 +12,19 @@ public class ReservationRepository(ReservationDbContext dbContext) : IReservatio
             .FirstOrDefaultAsync(r => r.Id == id);
     }
 
-    public Task<ReservationEntity?> GetByReservationNumberAsync(string reservationNumber)
+    public async Task<ReservationEntity?> GetByReservationNumberAsync(string reservationNumber)
     {
-        throw new NotImplementedException();
+        return await dbContext.Reservations
+            .Include((r => r.Guest))
+            .FirstOrDefaultAsync(r => r.ReservationNumber == reservationNumber);
     }
 
-    public Task<IEnumerable<ReservationEntity>> GetByGuestIdAsync(Guid guestId)
+    public async Task<IEnumerable<ReservationEntity>> GetByGuestIdAsync(Guid guestId)
     {
-        throw new NotImplementedException();
+        return await dbContext.Reservations
+            .Include(r => r.Guest)
+            .Where(r => r.GuestId == guestId)
+            .ToListAsync();
     }
 
     public Task<IEnumerable<ReservationEntity>> GetByDateRangeAsync(DateTime startDate, DateTime endDate)

@@ -21,4 +21,9 @@ public class ToReservationMapper
             RoomTypeId = reservation.RoomTypeId
         };
     }
+    
+    public static IEnumerable<Reservation> MapToReservation(IEnumerable<ReservationEntity> entities)
+    {
+        return entities?.Select(MapToReservation) ?? new List<Reservation>();
+    }
 }

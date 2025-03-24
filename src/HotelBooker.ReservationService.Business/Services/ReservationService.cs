@@ -22,14 +22,20 @@ public class ReservationService : IReservationService
         return mappedReservation;
     }
 
-    public Task<Reservation> GetReservationByNumberAsync(string reservationNumber)
+    public async Task<Reservation> GetReservationByNumberAsync(string reservationNumber)
     {
-        throw new NotImplementedException();
+        var reservationResponse = await _reservationRepository.GetByReservationNumberAsync(reservationNumber);
+        var mappedReservation = ToReservationMapper.MapToReservation(reservationResponse);
+
+        return mappedReservation;
     }
 
-    public Task<IEnumerable<Reservation>> GetReservationsByGuestIdAsync(Guid guestId)
+    public async Task<IEnumerable<Reservation>> GetReservationsByGuestIdAsync(Guid guestId)
     {
-        throw new NotImplementedException();
+        var reservationEntities  = await _reservationRepository.GetByGuestIdAsync(guestId);
+        var mappedReservation = ToReservationMapper.MapToReservation(reservationEntities);
+
+        return mappedReservation;
     }
 
     public async Task<Reservation> CreateReservationAsync(Reservation reservation)
